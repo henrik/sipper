@@ -12,18 +12,14 @@ defmodule Sipper.FeedParser do
 
   defp parse_item(item) do
     title = item |> Floki.find("title") |> Floki.text
-
     description_html = item |> Floki.find("description") |> Floki.text
 
     # Floki doesn't compensate well enough for borked HTML, so just regex this.
     file_tuples =
-      Regex.scan(~r|<a href=".+/download\?file_id=(\d+)">(.+?)</a>|, description_html)
-        |> Enum.map fn ([_, id, title]) -> {id, title} end
+      ~r|<a href=".+/download\?file_id=(\d+)">(.+?)</a>|
+      |> Regex.scan(description_html)
+      |> Enum.map fn ([_, id, title]) -> {id, title} end
 
     { title, file_tuples }
-  end
-
-  defp href(a) do
-    a |> Floki.attribute("href") |> hd
   end
 end

@@ -12,7 +12,7 @@ defmodule Sipper.Downloader do
     # Downloading a file (id, filename)
     {file_id, file_name} = {"1413", "003_Pattern_Matching.md"}
     url = "https://#{@subdomain}.dpdcart.com/feed/download/#{file_id}/#{file_name}"
-    response = HTTPotion.get(url, basic_auth: {user, pw})
+    _response = HTTPotion.get(url, basic_auth: {user, pw})
     #IO.puts response.body
   end
 
