@@ -2,4 +2,6 @@
 /deps
 erl_crash.dump
 *.ez
-sipper
+
+# Generated binary
+/sipper
