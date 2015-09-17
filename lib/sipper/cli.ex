@@ -4,9 +4,11 @@ defmodule Sipper.CLI do
   end
 
   defp parse_args(args) do
-    {options, _, _} = OptionParser.parse(args,
-      switches: [user: :string, pw: :string]
-    )
+    {options, _, _} = OptionParser.parse(args, switches: [
+      user: :string,
+      pw: :string,
+    ])
+
     options
   end
 
