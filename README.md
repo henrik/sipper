@@ -8,7 +8,8 @@ Implemented in Elixir for fun and learning, and because the technology is well-s
 ## Usage
 
     mix deps.get
-    elixir lib/sipper.ex  # TODO: something nicer
+    mix escript.build  # Builds a "sipper" binary
+    ./sipper
 
 It will prompt for auth details and store them in `~/.elixir_sips`.
 
