@@ -5,7 +5,7 @@ defmodule Sipper.Mixfile do
     [app: :sipper,
      version: "0.0.1",
      elixir: "~> 1.0",
-     escript: [main_module: Sipper],
+     escript: [main_module: Sipper.CLI],
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      deps: deps]
