@@ -9,9 +9,7 @@ Implemented in Elixir for fun and learning, and because the technology is well-s
 
     mix deps.get
     mix escript.build  # Builds a "sipper" binary
-    ./sipper
-
-It will prompt for auth details and store them in `~/.elixir_sips`.
+    ./sipper --user me@example.com --pw mypassword
 
 
 ## License
