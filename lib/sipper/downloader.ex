@@ -6,13 +6,14 @@ defmodule Sipper.Downloader do
   def run(user, pw) do
     {user, pw}
     |> get_feed_html
-    |> String.length |> IO.puts
+    |> parse_feed
+    |> IO.inspect
 
     # Downloading a file (id, filename)
     {file_id, file_name} = {"1413", "003_Pattern_Matching.md"}
     url = "https://#{@subdomain}.dpdcart.com/feed/download/#{file_id}/#{file_name}"
     response = HTTPotion.get(url, basic_auth: {user, pw})
-    IO.puts response.body
+    #IO.puts response.body
   end
 
   defp get_feed_html(auth) do
@@ -22,4 +23,6 @@ defmodule Sipper.Downloader do
     %HTTPotion.Response{body: html, status_code: 200} = response
     html
   end
+
+  defp parse_feed(html), do: Sipper.FeedParser.parse(html)
 end
