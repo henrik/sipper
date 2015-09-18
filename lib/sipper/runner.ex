@@ -41,15 +41,11 @@ defmodule Sipper.Runner do
     else
       IO.puts "[DOWNLOADING] #{name}…"
 
-      download_file({id, name}, path, auth)
+      data = Sipper.DpdCartClient.get_file!({id, name}, auth)
+      File.write!(path, data)
 
       IO.puts "[DONE!] #{name}"
     end
-  end
-
-  defp download_file({id, name}, path, auth) do
-    data = Sipper.DpdCartClient.get_file!({id, name}, auth)
-    File.write!(path, data)
   end
 
   defp parse_feed(html), do: Sipper.FeedParser.parse(html)
