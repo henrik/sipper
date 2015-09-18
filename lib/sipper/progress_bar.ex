@@ -1,17 +1,22 @@
 defmodule Sipper.ProgressBar do
-  def print(acc, total) do
-    percent = acc / total * 100 |> Float.round(2)
-    percent_int = percent |> Float.round |> trunc
+  # https://en.wikipedia.org/wiki/Block_Elements
+  @bar "█"
+  @blank "░"
 
-    bar = String.duplicate("=", percent_int)
-    space = String.duplicate(" ", 100 - percent_int)
+  def print(acc, total) do
+    percent = acc / total * 100 |> Float.round |> trunc
+
+    bar = String.duplicate(@bar, percent)
+    space = String.duplicate(@blank, 100 - percent)
     IO.write [
       "\r",
-      IO.ANSI.blue, "[",
       IO.ANSI.magenta, "#{bar}#{space}",
-      IO.ANSI.blue, "]",
-      IO.ANSI.reset, " #{percent} % (#{mb acc}/#{mb total})",
+      IO.ANSI.reset, " #{format_percent percent} % (#{mb acc}/#{mb total})",
     ]
+  end
+
+  defp format_percent(number) do
+    number |> Integer.to_string |> String.rjust(3)
   end
 
   defp mb(bytes) do
