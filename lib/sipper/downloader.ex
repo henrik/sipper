@@ -1,7 +1,10 @@
 defmodule Sipper.Downloader do
   @subdomain "elixirsips"
   @feed_url  "https://#{@subdomain}.dpdcart.com/feed"
-  @timeout_ms 10_000  # The default 5000 will time out sometimes.
+  @feed_timeout_ms 15_000  # The default 5000 will time out sometimes.
+  @file_timeout_ms 1000 * 60 * 60 * 3
+
+  @dir "./downloads"
 
   @cache_file "/tmp/sipper.cache"
   @cache_ttl_sec 5 * 60
@@ -9,18 +12,15 @@ defmodule Sipper.Downloader do
   def run(user, pw) do
     expire_stale_cache
 
-    {user, pw}
+    auth = {user, pw}
+
+    auth
     |> get_feed_html
     |> parse_feed
 
     |> Enum.take(2)  # Just for dev.
-    |> IO.inspect
 
-    # Downloading a file (id, filename)
-    {file_id, file_name} = {"1413", "003_Pattern_Matching.md"}
-    url = "https://#{@subdomain}.dpdcart.com/feed/download/#{file_id}/#{file_name}"
-    _response = HTTPotion.get(url, basic_auth: {user, pw})
-    #IO.puts response.body
+    |> Enum.each(&download_episode(&1, auth))
   end
 
   defp expire_stale_cache do
@@ -36,17 +36,42 @@ defmodule Sipper.Downloader do
   defp get_feed_html(auth) do
     case File.read(@cache_file) do
       {:ok, html} ->
-        IO.puts "Loaded feed from cache…"
+        IO.puts "Retrieved feed from cache…"
         html
       _ ->
-        IO.puts "Retrieving feed…"
+        IO.puts "Retrieving feed (nothing is cached)…"
 
-        response = HTTPotion.get(@feed_url, basic_auth: auth, timeout: @timeout_ms)
+        response = HTTPotion.get(@feed_url, basic_auth: auth, timeout: @feed_timeout_ms)
         %HTTPotion.Response{body: html, status_code: 200} = response
 
         File.write!(@cache_file, html)
 
         html
+    end
+  end
+
+  defp download_episode({title, files}, auth) do
+    files |> Enum.each(&download_file(title, &1, auth))
+  end
+
+  defp download_file(title, {id, name}, auth) do
+    dir = "#{@dir}/#{title}"
+    File.mkdir_p!(dir)
+
+    path = "#{dir}/#{name}"
+
+    if File.exists?(path) do
+      IO.puts "[ALREADY DOWNLOADED] #{path}"
+    else
+      IO.puts "[DOWNLOADING] #{name}…"
+
+      # TODO: Do this in curl to get progress?
+      url = "https://#{@subdomain}.dpdcart.com/feed/download/#{id}/#{name}"
+      response = HTTPotion.get(url, basic_auth: auth, timeout: @file_timeout_ms)
+      %HTTPotion.Response{body: data, status_code: 200} = response
+
+      File.write!(path, data)
+      IO.puts "[DONE!] #{name}"
     end
   end
 

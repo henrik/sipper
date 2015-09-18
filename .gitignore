@@ -5,3 +5,6 @@ erl_crash.dump
 
 # Generated binary
 /sipper
+
+# Downloaded files
+/downloads
