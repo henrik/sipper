@@ -18,7 +18,7 @@ defmodule Sipper.Downloader do
     |> get_feed_html
     |> parse_feed
 
-    |> Enum.take(2)  # Just for dev.
+    #|> Enum.take(2)  # Just for dev.
 
     |> Enum.each(&download_episode(&1, auth))
   end

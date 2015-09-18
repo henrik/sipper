@@ -1,6 +1,6 @@
 # Sipper
 
-**Work in progress!** May not actually work yet.
+**Work in progress! Status per 2015-09-18 11:10:** Works but is very unpolished.
 
 Downloader for [Elixir Sips](http://elixirsips.com/).
 
