@@ -1,6 +1,6 @@
 defmodule Sipper.FeedCache do
   @path "/tmp/sipper.cache"
-  @ttl_seconds 5 * 60
+  @ttl_seconds 60 * 30
 
   def read do
     expire_if_stale
