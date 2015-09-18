@@ -1,6 +1,10 @@
 defmodule Sipper.Runner do
   @dir "./downloads"
 
+  # Vertical alignment.
+  @exists_label "[EXISTS]"
+  @get_label    "[GET]   "
+
   def run(user, pw, max) do
     auth = {user, pw}
 
@@ -44,9 +48,9 @@ defmodule Sipper.Runner do
     path = "#{dir}/#{name}"
 
     if File.exists?(path) do
-      IO.puts [IO.ANSI.blue, "[EXISTS]", IO.ANSI.reset, " ", path]
+      IO.puts [IO.ANSI.blue, @exists_label, IO.ANSI.reset, " ", path]
     else
-      IO.puts [IO.ANSI.magenta, "[GET]", IO.ANSI.reset, " ", path]
+      IO.puts [IO.ANSI.magenta, @get_label, IO.ANSI.reset, " ", path]
       Sipper.DpdCartClient.get_file({id, name}, auth, callback: &receive_file(path, &1))
     end
   end
