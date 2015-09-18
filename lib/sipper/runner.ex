@@ -28,7 +28,7 @@ defmodule Sipper.Runner do
     files |> Enum.each(&download_file(title, &1, auth))
   end
 
-  defp download_file(title, {id, name}, auth) do
+  defp download_file(title, file, auth) do
     dir = "#{@dir}/#{title}"
     File.mkdir_p!(dir)
 
@@ -39,7 +39,7 @@ defmodule Sipper.Runner do
     else
       IO.puts "[DOWNLOADING] #{name}…"
 
-      data = Sipper.DpdCartClient.get_file!({id, name}, auth)
+      data = Sipper.DpdCartClient.get_file!(file, auth)
       File.write!(path, data)
 
       IO.puts "[DONE!] #{name}"
@@ -48,9 +48,7 @@ defmodule Sipper.Runner do
 
   defp parse_feed(html), do: Sipper.FeedParser.parse(html)
 
-  defp limit_to(episodes, :unlimited) do
-    episodes
-  end
+  defp limit_to(episodes, :unlimited), do: episodes
 
   defp limit_to(episodes, max) do
     episodes |> Enum.take(max)
