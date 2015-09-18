@@ -1,9 +1,4 @@
 defmodule Sipper.Downloader do
-  @subdomain "elixirsips"
-  @feed_url  "https://#{@subdomain}.dpdcart.com/feed"
-  @feed_timeout_ms 15_000  # The default 5000 will time out sometimes.
-  @file_timeout_ms 1000 * 60 * 60 * 3
-
   @dir "./downloads"
 
   @cache_file "/tmp/sipper.cache"
@@ -39,13 +34,9 @@ defmodule Sipper.Downloader do
         IO.puts "Retrieved feed from cache…"
         html
       _ ->
-        IO.puts "Retrieving feed (nothing is cached)…"
-
-        response = HTTPotion.get(@feed_url, basic_auth: auth, timeout: @feed_timeout_ms)
-        %HTTPotion.Response{body: html, status_code: 200} = response
-
+        IO.puts "Retrieving feed (wasn't in cache)…"
+        html = Sipper.DpdCartClient.get_feed!(auth)
         File.write!(@cache_file, html)
-
         html
     end
   end
@@ -65,19 +56,14 @@ defmodule Sipper.Downloader do
     else
       IO.puts "[DOWNLOADING] #{name}…"
 
-      url = "https://#{@subdomain}.dpdcart.com/feed/download/#{id}/#{name}"
-
-      download_file(url, path, auth)
+      download_file({id, name}, path, auth)
 
       IO.puts "[DONE!] #{name}"
     end
   end
 
-  defp download_file(url, path, auth) do
-    # TODO: Do this in curl to get progress?
-    response = HTTPotion.get(url, basic_auth: auth, timeout: @file_timeout_ms)
-    %HTTPotion.Response{body: data, status_code: 200} = response
-
+  defp download_file({id, name}, path, auth) do
+    data = Sipper.DpdCartClient.get_file!({id, name}, auth)
     File.write!(path, data)
   end
 
