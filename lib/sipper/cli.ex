@@ -13,6 +13,6 @@ defmodule Sipper.CLI do
   end
 
   defp run(user: user, pw: pw) do
-    Sipper.Downloader.run(user, pw)
+    Sipper.Runner.run(user, pw)
   end
 end

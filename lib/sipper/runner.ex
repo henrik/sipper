@@ -1,4 +1,4 @@
-defmodule Sipper.Downloader do
+defmodule Sipper.Runner do
   @dir "./downloads"
 
   @cache_file "/tmp/sipper.cache"
