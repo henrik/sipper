@@ -46,7 +46,7 @@ defmodule Sipper.Runner do
     if File.exists?(path) do
       IO.puts [IO.ANSI.blue, "[EXISTS]", IO.ANSI.reset, " ", path]
     else
-      IO.puts [IO.ANSI.magenta, "[GET]", IO.ANSI.reset, " ", name]
+      IO.puts [IO.ANSI.magenta, "[GET]", IO.ANSI.reset, " ", path]
       Sipper.DpdCartClient.get_file({id, name}, auth, callback: &receive_file(path, &1))
     end
   end
