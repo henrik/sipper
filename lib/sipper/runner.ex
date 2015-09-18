@@ -2,6 +2,8 @@ defmodule Sipper.Runner do
   @dir "./downloads"
 
   def run(user, pw, max) do
+    {:ok, _pid} = Sipper.DownloadServer.start_link
+
     auth = {user, pw}
 
     auth
@@ -9,6 +11,8 @@ defmodule Sipper.Runner do
     |> parse_feed
     |> limit_to(max)
     |> Enum.each(&download_episode(&1, auth))
+
+    Sipper.DownloadServer.await
   end
 
   defp get_feed(auth) do
@@ -37,12 +41,7 @@ defmodule Sipper.Runner do
     if File.exists?(path) do
       IO.puts "[ALREADY DOWNLOADED] #{path}"
     else
-      IO.puts "[DOWNLOADING] #{name}…"
-
-      data = Sipper.DpdCartClient.get_file!({id, name}, auth)
-      File.write!(path, data)
-
-      IO.puts "[DONE!] #{name}"
+      Sipper.DownloadServer.get(path, {id, name}, auth)
     end
   end
 
