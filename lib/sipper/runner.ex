@@ -13,10 +13,10 @@ defmodule Sipper.Runner do
   defp get_feed(auth) do
     case Sipper.FeedCache.read do
       {:ok, cached_feed} ->
-        IO.puts "Retrieved feed from cache…"
+        IO.puts [IO.ANSI.blue, "[USING CACHED FEED]"]
         cached_feed
       _ ->
-        IO.puts "Retrieving feed (wasn't in cache)…"
+        IO.puts [IO.ANSI.magenta, "[GET FEED]"]
         feed = Sipper.DpdCartClient.get_feed!(auth)
         Sipper.FeedCache.write(feed)
         feed
