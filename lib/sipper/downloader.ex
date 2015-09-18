@@ -10,7 +10,7 @@ defmodule Sipper.Downloader do
     auth = {user, pw}
 
     auth
-    |> get_feed_html
+    |> get_feed
     |> parse_feed
 
     |> Enum.take(3)  # Just for dev.
@@ -28,16 +28,16 @@ defmodule Sipper.Downloader do
     end
   end
 
-  defp get_feed_html(auth) do
+  defp get_feed(auth) do
     case File.read(@cache_file) do
-      {:ok, html} ->
+      {:ok, cached_feed} ->
         IO.puts "Retrieved feed from cache…"
-        html
+        cached_feed
       _ ->
         IO.puts "Retrieving feed (wasn't in cache)…"
-        html = Sipper.DpdCartClient.get_feed!(auth)
-        File.write!(@cache_file, html)
-        html
+        feed = Sipper.DpdCartClient.get_feed!(auth)
+        File.write!(@cache_file, feed)
+        feed
     end
   end
 
