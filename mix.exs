@@ -26,7 +26,6 @@ defmodule Sipper.Mixfile do
       {:httpotion, "~> 2.1.0"},
       # 0.4 doesn't compile: https://github.com/philss/floki/issues/25
       {:floki, "~> 0.3.3"},
-      {:poolboy, github: "devinus/poolboy"},
     ]
   end
 end
