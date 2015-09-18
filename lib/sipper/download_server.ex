@@ -11,7 +11,7 @@ defmodule Sipper.DownloadServer do
   end
 
   def get(path, {id, name}, auth) do
-    GenServer.call(@server_name, {:get, path, {id, name}, auth}, :infinity)
+    GenServer.call(@server_name, {:get, {path, {id, name}, auth}}, :infinity)
   end
 
   def await do
@@ -32,11 +32,11 @@ defmodule Sipper.DownloadServer do
     {:ok, {pool, []}}
   end
 
-  def handle_call({:get, path, {id, name}, auth}, _from, {pool, tasks}) do
+  def handle_call({:get, data = {path, {id, name}, auth}}, _from, {pool, tasks}) do
 
     new_task = Task.async fn ->
       :poolboy.transaction pool, fn(worker_pid) ->
-        Sipper.DownloadWorker.fetch(worker_pid, {path, {id, name}, auth})
+        Sipper.DownloadWorker.fetch(worker_pid, data)
       end, :infinity
     end
 
