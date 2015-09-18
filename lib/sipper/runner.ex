@@ -38,7 +38,7 @@ defmodule Sipper.Runner do
     path = "#{dir}/#{name}"
 
     if File.exists?(path) do
-      IO.puts "[ALREADY DOWNLOADED] #{path}"
+      IO.puts [IO.ANSI.blue, "[EXISTS]", IO.ANSI.reset, " ", path]
     else
       IO.puts "[DOWNLOADING] #{name}…"
 
