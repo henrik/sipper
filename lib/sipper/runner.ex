@@ -47,7 +47,7 @@ defmodule Sipper.Runner do
   end
 
   defp receive_file(_path, {:file_progress, acc, total}) do
-    progressbar(acc, total)
+    print_progress_bar(acc, total)
   end
 
   defp receive_file(path, {:file_done, data}) do
@@ -55,7 +55,7 @@ defmodule Sipper.Runner do
     File.write!(path, data)
   end
 
-  defp progressbar(acc, total) do
+  defp print_progress_bar(acc, total) do
     percent = acc / total * 100 |> Float.round(2)
     percent_int = percent |> Float.round |> trunc
 
