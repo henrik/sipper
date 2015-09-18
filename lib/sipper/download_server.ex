@@ -1,27 +1,31 @@
 defmodule Sipper.DownloadServer do
   use GenServer
 
+  @server_name :downloader
+
   # Client API
 
   def start_link do
-    GenServer.start_link(__MODULE__, nil, name: :downloader)
+    GenServer.start_link(__MODULE__, nil, name: @server_name)
   end
 
   def get(path, {id, name}, auth) do
-    GenServer.call(:downloader, {:get, path, {id, name}, auth}, :infinity)
+    GenServer.call(@server_name, {:get, path, {id, name}, auth}, :infinity)
   end
 
   def await do
-    GenServer.call(:downloader, :await, :infinity)
+    GenServer.call(@server_name, :await, :infinity)
   end
 
   # GenServer API
 
   def init(_) do
-    # FIXME: named pool
-
     {:ok, pool} = :poolboy.start_link(
-      [worker_module: Sipper.DownloadWorker, size: 5, max_overflow: 0]
+      [
+        worker_module: Sipper.DownloadWorker,
+        size: 5,
+        max_overflow: 0,
+      ]
     )
 
     {:ok, {pool, []}}
