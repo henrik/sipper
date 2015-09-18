@@ -41,7 +41,7 @@ defmodule Sipper.Runner do
     if File.exists?(path) do
       IO.puts [IO.ANSI.blue, "[EXISTS]", IO.ANSI.reset, " ", path]
     else
-      IO.puts "[GET] #{name}"
+      IO.puts [IO.ANSI.magenta, "[GET]", IO.ANSI.reset, " ", name]
       Sipper.DpdCartClient.get_file({id, name}, auth, callback: &receive_file(path, &1))
     end
   end
@@ -61,7 +61,13 @@ defmodule Sipper.Runner do
 
     bar = String.duplicate("=", percent_int)
     space = String.duplicate(" ", 100 - percent_int)
-    IO.write "\r[#{bar}#{space}] #{percent} % (#{mb acc}/#{mb total})"
+    IO.write [
+      "\r",
+      IO.ANSI.blue, "[",
+      IO.ANSI.magenta, "#{bar}#{space}",
+      IO.ANSI.blue, "]",
+      IO.ANSI.reset, " #{percent} % (#{mb acc}/#{mb total})",
+    ]
   end
 
   defp mb(bytes) do
