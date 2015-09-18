@@ -1,15 +1,13 @@
 defmodule Sipper.Runner do
   @dir "./downloads"
 
-  def run(user, pw) do
+  def run(user, pw, max) do
     auth = {user, pw}
 
     auth
     |> get_feed
     |> parse_feed
-
-    |> Enum.take(3)  # Just for dev.
-
+    |> limit_to(max)
     |> Enum.each(&download_episode(&1, auth))
   end
 
@@ -49,4 +47,12 @@ defmodule Sipper.Runner do
   end
 
   defp parse_feed(html), do: Sipper.FeedParser.parse(html)
+
+  defp limit_to(episodes, :unlimited) do
+    episodes
+  end
+
+  defp limit_to(episodes, max) do
+    episodes |> Enum.take(max)
+  end
 end
