@@ -2,6 +2,7 @@ defmodule Sipper.DownloadServer do
   use GenServer
 
   @server_name :downloader
+  @concurrency 5
 
   # Client API
 
@@ -23,7 +24,7 @@ defmodule Sipper.DownloadServer do
     {:ok, pool} = :poolboy.start_link(
       [
         worker_module: Sipper.DownloadWorker,
-        size: 5,
+        size: @concurrency,
         max_overflow: 0,
       ]
     )
