@@ -24,8 +24,7 @@ defmodule Sipper.Mixfile do
     [
       {:ibrowse, github: "cmullaparthi/ibrowse", tag: "v4.1.2"},
       {:httpotion, "~> 2.1.0"},
-      # 0.4 doesn't compile: https://github.com/philss/floki/issues/25
-      {:floki, "~> 0.3.3"},
+      {:floki, "~> 0.4.1"},
     ]
   end
 end
