@@ -18,7 +18,7 @@ defmodule Sipper.Downloader do
     |> get_feed_html
     |> parse_feed
 
-    #|> Enum.take(2)  # Just for dev.
+    |> Enum.take(3)  # Just for dev.
 
     |> Enum.each(&download_episode(&1, auth))
   end
@@ -65,14 +65,20 @@ defmodule Sipper.Downloader do
     else
       IO.puts "[DOWNLOADING] #{name}…"
 
-      # TODO: Do this in curl to get progress?
       url = "https://#{@subdomain}.dpdcart.com/feed/download/#{id}/#{name}"
-      response = HTTPotion.get(url, basic_auth: auth, timeout: @file_timeout_ms)
-      %HTTPotion.Response{body: data, status_code: 200} = response
 
-      File.write!(path, data)
+      download_file(url, path, auth)
+
       IO.puts "[DONE!] #{name}"
     end
+  end
+
+  defp download_file(url, path, auth) do
+    # TODO: Do this in curl to get progress?
+    response = HTTPotion.get(url, basic_auth: auth, timeout: @file_timeout_ms)
+    %HTTPotion.Response{body: data, status_code: 200} = response
+
+    File.write!(path, data)
   end
 
   defp parse_feed(html), do: Sipper.FeedParser.parse(html)
