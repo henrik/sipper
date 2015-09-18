@@ -23,6 +23,11 @@ defmodule Sipper.Runner do
     end
   end
 
+  defp parse_feed(html), do: Sipper.FeedParser.parse(html)
+
+  defp limit_to(episodes, :unlimited), do: episodes
+  defp limit_to(episodes, max), do: episodes |> Enum.take(max)
+
   defp download_all(episodes, auth) do
     episodes |> Enum.each(&download_episode(&1, auth))
     IO.puts "All done!"
@@ -58,9 +63,4 @@ defmodule Sipper.Runner do
   defp print_progress_bar(acc, total) do
     Sipper.ProgressBar.print(acc, total)
   end
-
-  defp parse_feed(html), do: Sipper.FeedParser.parse(html)
-
-  defp limit_to(episodes, :unlimited), do: episodes
-  defp limit_to(episodes, max), do: episodes |> Enum.take(max)
 end
