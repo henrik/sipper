@@ -13,7 +13,7 @@ defmodule Sipper.DpdCartClient do
 
   def get_file({id, name}, {_user, _pw} = auth, callback: cb) do
     url = file_url(id, name)
-    response = HTTPotion.get(url, basic_auth: auth, timeout: @file_timeout_ms, stream_to: self)
+    HTTPotion.get(url, basic_auth: auth, timeout: @file_timeout_ms, stream_to: self)
     receive_file(total_bytes: :unknown, data: "", callback: cb)
   end
 
