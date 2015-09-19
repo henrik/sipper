@@ -1,13 +1,9 @@
 defmodule Sipper.Runner do
-  # Vertical alignment.
-  @exists_label "[EXISTS]"
-  @get_label    "[GET]   "
-
   def run(config) do
     get_feed(config.auth)
     |> parse_feed
     |> limit_to(config.max)
-    |> download_all(config)
+    |> download(config)
   end
 
   defp get_feed(auth) do
@@ -28,34 +24,7 @@ defmodule Sipper.Runner do
   defp limit_to(episodes, :unlimited), do: episodes
   defp limit_to(episodes, max), do: episodes |> Enum.take(max)
 
-  defp download_all(episodes, config) do
-    episodes |> Enum.each(&download_episode(&1, config))
-    IO.puts "All done!"
-  end
-
-  defp download_episode({title, files}, config) do
-    files |> Enum.each(&download_file(title, &1, config))
-  end
-
-  defp download_file(title, {id, name}, config) do
-    dir = "#{config.dir}/#{title}"
-    File.mkdir_p!(dir)
-
-    path = "#{dir}/#{name}"
-
-    if File.exists?(path) do
-      IO.puts [IO.ANSI.blue, @exists_label, IO.ANSI.reset, " ", path]
-    else
-      IO.puts [IO.ANSI.magenta, @get_label, IO.ANSI.reset, " ", path]
-      Sipper.DpdCartClient.get_file({id, name}, config.auth, callback: &download_file_callback(&1, path))
-    end
-  end
-
-  defp download_file_callback({:file_progress, acc, total}, _path) do
-    Sipper.ProgressBar.print(acc, total)
-  end
-
-  defp download_file_callback({:file_done, data}, path) do
-    File.write!(path, data)
+  defp download(episodes, config) do
+    Sipper.Downloader.run(episodes, config)
   end
 end
