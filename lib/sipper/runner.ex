@@ -3,13 +3,11 @@ defmodule Sipper.Runner do
   @exists_label "[EXISTS]"
   @get_label    "[GET]   "
 
-  def run(user, pw, max, dir) do
-    auth = {user, pw}
-
-    get_feed(auth)
+  def run(config) do
+    get_feed(config.auth)
     |> parse_feed
-    |> limit_to(max)
-    |> download_all(auth, dir)
+    |> limit_to(config.max)
+    |> download_all(config)
   end
 
   defp get_feed(auth) do
@@ -30,26 +28,26 @@ defmodule Sipper.Runner do
   defp limit_to(episodes, :unlimited), do: episodes
   defp limit_to(episodes, max), do: episodes |> Enum.take(max)
 
-  defp download_all(episodes, auth, dir) do
-    episodes |> Enum.each(&download_episode(&1, auth, dir))
+  defp download_all(episodes, config) do
+    episodes |> Enum.each(&download_episode(&1, config))
     IO.puts "All done!"
   end
 
-  defp download_episode({title, files}, auth, dir) do
-    files |> Enum.each(&download_file(title, &1, auth, dir))
+  defp download_episode({title, files}, config) do
+    files |> Enum.each(&download_file(title, &1, config))
   end
 
-  defp download_file(title, {id, name}, auth, dir) do
-    file_dir = "#{dir}/#{title}"
-    File.mkdir_p!(file_dir)
+  defp download_file(title, {id, name}, config) do
+    dir = "#{config.dir}/#{title}"
+    File.mkdir_p!(dir)
 
-    path = "#{file_dir}/#{name}"
+    path = "#{dir}/#{name}"
 
     if File.exists?(path) do
       IO.puts [IO.ANSI.blue, @exists_label, IO.ANSI.reset, " ", path]
     else
       IO.puts [IO.ANSI.magenta, @get_label, IO.ANSI.reset, " ", path]
-      Sipper.DpdCartClient.get_file({id, name}, auth, callback: &receive_file(path, &1))
+      Sipper.DpdCartClient.get_file({id, name}, config.auth, callback: &receive_file(path, &1))
     end
   end
 

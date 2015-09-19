@@ -19,11 +19,15 @@ defmodule Sipper.CLI do
   end
 
   defp run(options) do
-    Sipper.Runner.run(
-      Dict.fetch!(options, :user),
-      Dict.fetch!(options, :pw),
-      Dict.get(options, :max, :unlimited),
-      Dict.get(options, :dir, "./downloads")
-    )
+    user = Dict.fetch!(options, :user)
+    pw = Dict.fetch!(options, :pw)
+
+    config = %Sipper.Config{
+      auth: {user, pw},
+      dir: Dict.get(options, :dir, "./downloads"),
+      max: Dict.get(options, :max, :unlimited),
+    }
+
+    Sipper.Runner.run(config)
   end
 end
