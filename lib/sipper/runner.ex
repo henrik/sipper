@@ -56,15 +56,10 @@ defmodule Sipper.Runner do
   end
 
   defp receive_file(_path, {:file_progress, acc, total}) do
-    print_progress_bar(acc, total)
+    Sipper.ProgressBar.print(acc, total)
   end
 
   defp receive_file(path, {:file_done, data}) do
-    IO.puts "\n"
     File.write!(path, data)
-  end
-
-  defp print_progress_bar(acc, total) do
-    Sipper.ProgressBar.print(acc, total)
   end
 end

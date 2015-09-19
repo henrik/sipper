@@ -25,6 +25,7 @@ defmodule Sipper.Mixfile do
       {:ibrowse, github: "cmullaparthi/ibrowse", tag: "v4.1.2"},
       {:httpotion, "~> 2.1.0"},
       {:floki, "~> 0.4.1"},
+      {:progress_bar, ">= 0.0.5"},
     ]
   end
 end

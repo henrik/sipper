@@ -4,23 +4,14 @@ defmodule Sipper.ProgressBar do
   @blank "░"
 
   def print(acc, total) do
-    percent = acc / total * 100 |> Float.round |> trunc
-
-    bar = String.duplicate(@bar, percent)
-    space = String.duplicate(@blank, 100 - percent)
-    IO.write [
-      "\r",
-      IO.ANSI.magenta, "#{bar}#{space}",
-      IO.ANSI.reset, " #{format_percent percent} % (#{mb acc}/#{mb total})",
+    format = [
+      bar: @bar,
+      blank: @blank,
+      bar_color: IO.ANSI.magenta,
+      blank_color: IO.ANSI.magenta,
+      bytes: true,
     ]
-  end
 
-  defp format_percent(number) do
-    number |> Integer.to_string |> String.rjust(3)
-  end
-
-  defp mb(bytes) do
-    number = bytes / 1_048_576 |> Float.round(2)
-    "#{number} MB"
+    ProgressBar.render(acc, total, format)
   end
 end
