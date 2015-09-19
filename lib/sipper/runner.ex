@@ -19,7 +19,9 @@ defmodule Sipper.Runner do
     end
   end
 
-  defp parse_feed(html), do: Sipper.FeedParser.parse(html)
+  defp parse_feed(feed) do
+    Sipper.FeedParser.parse(feed)
+  end
 
   defp limit_to(episodes, :unlimited), do: episodes
   defp limit_to(episodes, max), do: episodes |> Enum.take(max)
