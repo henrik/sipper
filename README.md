@@ -27,6 +27,11 @@ The `sipper` executable is self-contained and can run on any machine with Erlang
 Be kind: only download for personal use.
 
 
+## Also see
+
+* [Elixir Sips Downloader](https://github.com/benjamintanweihao/elixir-sips-downloader) written in Ruby
+
+
 ## License
 
 By Henrik Nyh 2015-09-17 under the MIT license.
