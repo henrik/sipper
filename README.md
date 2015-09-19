@@ -1,8 +1,8 @@
 # Sipper
 
-Downloader for [Elixir Sips](http://elixirsips.com/).
+Downloader for [Elixir Sips](http://elixirsips.com/), implemented in Elixir for fun and learning.
 
-Implemented in Elixir for fun and learning.
+![Screenshot](https://s3.amazonaws.com/f.cl.ly/items/2A1I0V1P3Y2o3x3u2F3F/Screenshot%202015-09-19%2009.49.43.png)
 
 
 ## Usage
