@@ -22,11 +22,15 @@ defmodule Sipper.DpdCartClient do
       other -> cb.(other)
     end
 
-    receive_file(total_bytes: :unknown, data: "", callback: cb_plus_redirect_handling)
+    receive_file(cb_plus_redirect_handling)
   end
 
   defp get_external_file(url, callback) do
     HTTPotion.get(url, timeout: @file_timeout_ms, stream_to: self)
+    receive_file(callback)
+  end
+
+  defp receive_file(callback) when is_function(callback) do
     receive_file(total_bytes: :unknown, data: "", callback: callback)
   end
 
