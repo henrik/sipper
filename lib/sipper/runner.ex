@@ -38,7 +38,7 @@ defmodule Sipper.Runner do
   end
 
   defp download_file(title, {id, name}, config) do
-    dir = "#{config.dir}/#{title}"
+    dir = "#{config.dir}/#{title |> String.replace(":", " ")}"
     File.mkdir_p!(dir)
 
     path = "#{dir}/#{name}"
