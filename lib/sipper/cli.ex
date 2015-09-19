@@ -11,17 +11,19 @@ defmodule Sipper.CLI do
       ],
       switches: [
         max: :integer,
+        dir: :string,
       ],
     )
 
     options
   end
 
-  defp run(user: user, pw: pw, max: max) do
-    Sipper.Runner.run(user, pw, max)
-  end
-
-  defp run(user: user, pw: pw) do
-    Sipper.Runner.run(user, pw, :unlimited)
+  defp run(options) do
+    Sipper.Runner.run(
+      Dict.fetch!(options, :user),
+      Dict.fetch!(options, :pw),
+      Dict.get(options, :max, :unlimited),
+      Dict.get(options, :dir, "./downloads")
+    )
   end
 end

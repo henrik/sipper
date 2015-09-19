@@ -1,17 +1,15 @@
 defmodule Sipper.Runner do
-  @dir "./downloads"
-
   # Vertical alignment.
   @exists_label "[EXISTS]"
   @get_label    "[GET]   "
 
-  def run(user, pw, max) do
+  def run(user, pw, max, dir) do
     auth = {user, pw}
 
     get_feed(auth)
     |> parse_feed
     |> limit_to(max)
-    |> download_all(auth)
+    |> download_all(auth, dir)
   end
 
   defp get_feed(auth) do
@@ -32,20 +30,20 @@ defmodule Sipper.Runner do
   defp limit_to(episodes, :unlimited), do: episodes
   defp limit_to(episodes, max), do: episodes |> Enum.take(max)
 
-  defp download_all(episodes, auth) do
-    episodes |> Enum.each(&download_episode(&1, auth))
+  defp download_all(episodes, auth, dir) do
+    episodes |> Enum.each(&download_episode(&1, auth, dir))
     IO.puts "All done!"
   end
 
-  defp download_episode({title, files}, auth) do
-    files |> Enum.each(&download_file(title, &1, auth))
+  defp download_episode({title, files}, auth, dir) do
+    files |> Enum.each(&download_file(title, &1, auth, dir))
   end
 
-  defp download_file(title, {id, name}, auth) do
-    dir = "#{@dir}/#{title}"
-    File.mkdir_p!(dir)
+  defp download_file(title, {id, name}, auth, dir) do
+    file_dir = "#{dir}/#{title}"
+    File.mkdir_p!(file_dir)
 
-    path = "#{dir}/#{name}"
+    path = "#{file_dir}/#{name}"
 
     if File.exists?(path) do
       IO.puts [IO.ANSI.blue, @exists_label, IO.ANSI.reset, " ", path]

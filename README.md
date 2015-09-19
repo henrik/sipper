@@ -17,7 +17,11 @@ If you want to limit the download to e.g. the last 3 episodes, do:
 
     ./sipper --user me@example.com --pw mypassword --max 3
 
-Files will end up in `./downloads`. If a file exists on disk, it won't be downloaded again.
+By default, files end up in `./downloads`. You can specify another destination (automatically created if it doesn't exist):
+
+    ./sipper --user me@example.com --pw mypassword --dir ~/Downloads/Elixir\ Sips
+
+If a file exists on disk, it won't be downloaded again.
 
 The `sipper` executable is self-contained and can run on any machine with Erlang installed. [Read more.](http://elixir-lang.org/docs/master/mix/Mix.Tasks.Escript.Build.html)
 
