@@ -8,9 +8,9 @@ defmodule SipperFeedParserTest do
       {
         "001 - Introduction and Installing Elixir",
         [
-          { "1321", "001_Introduction_and_Installing_Elixir.mkv" },
-          { "1366", "001_Introduction_and_Installing_Elixir.mp4" },
-          { "1382", "001_Introduction_and_Installing_Elixir.md" },
+          %Sipper.File{id: "1321", name: "001_Introduction_and_Installing_Elixir.mkv"},
+          %Sipper.File{id: "1366", name: "001_Introduction_and_Installing_Elixir.mp4"},
+          %Sipper.File{id: "1382", name: "001_Introduction_and_Installing_Elixir.md"},
         ],
       },
     ]
@@ -24,8 +24,8 @@ defmodule SipperFeedParserTest do
       {
         "165 - Accounting 101",
         [
-          { "51555", "165_Accounting_101.mp4" },
-          { "51556", "165_Accounting_101.markdown" },
+          %Sipper.File{id: "51555", name: "165_Accounting_101.mp4"},
+          %Sipper.File{id: "51556", name: "165_Accounting_101.markdown"},
         ],
       },
     ]
