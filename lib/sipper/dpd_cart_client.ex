@@ -6,6 +6,7 @@ defmodule Sipper.DpdCartClient do
   @file_timeout_ms 1000 * 60 * 60 * 3
 
   def get_feed!({_user, _pw} = auth) do
+    # We can't(?) get this with a meaningful progress bar, because the headers doesn't include a Content-Length.
     response = HTTPotion.get(@feed_url, basic_auth: auth, timeout: @feed_timeout_ms)
     %HTTPotion.Response{body: body, status_code: 200} = response
     body
