@@ -19,7 +19,12 @@ If you want to limit the download to e.g. the last 3 episodes, do:
 
 Files will end up in `./downloads`. If a file exists on disk, it won't be downloaded again.
 
-Be kind and only download for personal use.
+The `sipper` executable is self-contained and can run on any machine with Erlang installed. [Read more.](http://elixir-lang.org/docs/master/mix/Mix.Tasks.Escript.Build.html)
+
+
+## Don't be evil
+
+Be kind: only download for personal use.
 
 
 ## License
