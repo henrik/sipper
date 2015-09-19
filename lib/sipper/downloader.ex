@@ -12,17 +12,17 @@ defmodule Sipper.Downloader do
     files |> Enum.each(&download_file(title, &1, config))
   end
 
-  defp download_file(title, {id, name}, config) do
+  defp download_file(title, file, config) do
     dir = "#{config.dir}/#{title}"
     File.mkdir_p!(dir)
 
-    path = "#{dir}/#{name}"
+    path = "#{dir}/#{file.name}"
 
     if File.exists?(path) do
       IO.puts [IO.ANSI.blue, @exists_label, IO.ANSI.reset, " ", path]
     else
       IO.puts [IO.ANSI.magenta, @get_label, IO.ANSI.reset, " ", path]
-      Sipper.DpdCartClient.get_file({id, name}, config.auth, callback: &download_file_callback(&1, path))
+      Sipper.DpdCartClient.get_file(file, config.auth, callback: &download_file_callback(&1, path))
     end
   end
 

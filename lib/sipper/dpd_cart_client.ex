@@ -11,8 +11,8 @@ defmodule Sipper.DpdCartClient do
     body
   end
 
-  def get_file({id, name}, {_user, _pw} = auth, callback: cb) do
-    url = file_url(id, name)
+  def get_file(file, {_user, _pw} = auth, callback: cb) do
+    url = file_url(file)
     HTTPotion.get(url, basic_auth: auth, timeout: @file_timeout_ms, stream_to: self)
 
     # The files in episode 89 (and maybe others) redirect to S3.
@@ -59,7 +59,7 @@ defmodule Sipper.DpdCartClient do
     end
   end
 
-  defp file_url(id, name) do
+  defp file_url(%Sipper.File{id: id, name: name}) do
     "https://#{@subdomain}.dpdcart.com/feed/download/#{id}/#{name}"
   end
 end
