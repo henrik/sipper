@@ -10,7 +10,7 @@ Downloader for [Elixir Sips](http://elixirsips.com/), implemented in Elixir for 
 You need a paid account with Elixir Sips. Then clone this repo and:
 
     mix deps.get
-    mix escript.build  # Builds a "sipper" binary
+    mix escript.build  # Builds a "sipper" executable
     ./sipper --user me@example.com --pw mypassword
 
 If you want to limit the download to e.g. the last 3 episodes, do:
