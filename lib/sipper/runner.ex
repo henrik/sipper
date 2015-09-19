@@ -13,7 +13,7 @@ defmodule Sipper.Runner do
         cached_feed
       _ ->
         IO.puts [IO.ANSI.magenta, "[GET FEED]"]
-        feed = Sipper.DpdCartClient.get_feed!(auth)
+        feed = Sipper.DpdCartClient.get_feed(auth)
         Sipper.FeedCache.write(feed)
         feed
     end
