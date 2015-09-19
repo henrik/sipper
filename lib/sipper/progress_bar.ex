@@ -7,6 +7,7 @@ defmodule Sipper.ProgressBar do
     format = [
       bar: @bar,
       blank: @blank,
+      left: "", right: "",
       bar_color: IO.ANSI.magenta,
       blank_color: IO.ANSI.magenta,
       bytes: true,
