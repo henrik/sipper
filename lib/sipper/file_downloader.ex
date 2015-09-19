@@ -1,4 +1,4 @@
-defmodule Sipper.Downloader do
+defmodule Sipper.FileDownloader do
   # Vertical alignment.
   @exists_label "[EXISTS]"
   @get_label    "[GET]   "

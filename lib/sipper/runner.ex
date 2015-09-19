@@ -1,22 +1,13 @@
 defmodule Sipper.Runner do
   def run(config) do
-    get_feed(config.auth)
+    get_feed(config)
     |> parse_feed
     |> limit_to(config.max)
     |> download(config)
   end
 
-  defp get_feed(auth) do
-    case Sipper.FeedCache.read do
-      {:ok, cached_feed} ->
-        IO.puts [IO.ANSI.blue, "[USING CACHED FEED]"]
-        cached_feed
-      _ ->
-        IO.puts [IO.ANSI.magenta, "[GET FEED]"]
-        feed = Sipper.DpdCartClient.get_feed(auth)
-        Sipper.FeedCache.write(feed)
-        feed
-    end
+  defp get_feed(config) do
+    Sipper.FeedDownloader.run(config)
   end
 
   defp parse_feed(feed) do
@@ -27,6 +18,6 @@ defmodule Sipper.Runner do
   defp limit_to(episodes, max), do: episodes |> Enum.take(max)
 
   defp download(episodes, config) do
-    Sipper.Downloader.run(episodes, config)
+    Sipper.FileDownloader.run(episodes, config)
   end
 end
