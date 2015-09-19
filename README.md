@@ -7,7 +7,7 @@ Downloader for [Elixir Sips](http://elixirsips.com/), implemented in Elixir for 
 
 ## Usage
 
-You need a paid account with Elixir Sips. Then clone this repo and:
+You need a paid account with [Elixir Sips](http://elixirsips.com/). Then clone this repo and:
 
     mix deps.get
     mix escript.build  # Builds a "sipper" executable
