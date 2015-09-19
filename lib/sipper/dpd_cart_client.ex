@@ -14,12 +14,34 @@ defmodule Sipper.DpdCartClient do
   def get_file({id, name}, {_user, _pw} = auth, callback: cb) do
     url = file_url(id, name)
     HTTPotion.get(url, basic_auth: auth, timeout: @file_timeout_ms, stream_to: self)
-    receive_file(total_bytes: :unknown, data: "", callback: cb)
+
+    # The files in episode 89 (and maybe others) redirect to S3.
+    # We'll optimistically assume all redirects are external with no need for auth.
+    cb_plus_redirect_handling = fn
+      {:redirect, new_url} -> get_external_file(new_url, cb)
+      other -> cb.(other)
+    end
+
+    receive_file(total_bytes: :unknown, data: "", callback: cb_plus_redirect_handling)
+  end
+
+  defp get_external_file(url, callback) do
+    HTTPotion.get(url, timeout: @file_timeout_ms, stream_to: self)
+    receive_file(total_bytes: :unknown, data: "", callback: callback)
   end
 
   defp receive_file(total_bytes: total_bytes, data: data, callback: cb) do
     receive do
-      %HTTPotion.AsyncHeaders{headers: h} ->
+      %HTTPotion.AsyncHeaders{status_code: 302, headers: h} ->
+        # A HTTP redirect.
+
+        # We'll get an empty chunk and an "end", so let's get those out of the way.
+        receive do; %HTTPotion.AsyncChunk{chunk: ""} -> nil; end
+        receive do; %HTTPotion.AsyncEnd{} -> nil; end
+
+        # Inform about the redirect so another request can be made.
+        cb.({:redirect, h[:Location]})
+      %HTTPotion.AsyncHeaders{status_code: 200, headers: h} ->
         {total_bytes, _} = h[:"Content-Length"] |> Integer.parse
         cb.({:file_progress, 0, total_bytes})
         receive_file(total_bytes: total_bytes, data: data, callback: cb)
