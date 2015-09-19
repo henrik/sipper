@@ -36,8 +36,8 @@ defmodule Sipper.DpdCartClient do
         # A HTTP redirect.
 
         # We'll get an empty chunk and an "end", so let's get those out of the way.
-        receive do; %HTTPotion.AsyncChunk{chunk: ""} -> nil; end
-        receive do; %HTTPotion.AsyncEnd{} -> nil; end
+        receive do: (%HTTPotion.AsyncChunk{chunk: ""} -> nil)
+        receive do: (%HTTPotion.AsyncEnd{} -> nil)
 
         # Inform about the redirect so another request can be made.
         cb.({:redirect, h[:Location]})
