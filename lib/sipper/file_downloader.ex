@@ -2,6 +2,7 @@ defmodule Sipper.FileDownloader do
   # Vertical alignment.
   @exists_label "[EXISTS]"
   @get_label    "[GET]   "
+  @rename_label "[RENAME]"
 
   def run(episodes, config) do
     episodes |> Enum.each(&download_episode(&1, config))
@@ -13,9 +14,12 @@ defmodule Sipper.FileDownloader do
   end
 
   defp download_file(title, file, config) do
+    rename_any_existing_file_to_new_clean_name(config.dir, title)
     dir = "#{config.dir}/#{clean_file_name title}"
+
     File.mkdir_p!(dir)
 
+    rename_any_existing_file_to_new_clean_name(dir, file.name)
     path = "#{dir}/#{clean_file_name file.name}"
 
     if File.exists?(path) do
@@ -35,7 +39,13 @@ defmodule Sipper.FileDownloader do
   end
 
   defp clean_file_name(name) do
-    name
-    |> String.replace(":", "-")  # Breaks on Windows, shown as "/" on OS X.
+    Sipper.FileNameCleaner.clean(name)
+  end
+
+  # No need re-downloading stuff just because we changed how we clean up filenames.
+  def rename_any_existing_file_to_new_clean_name(dir, file) do
+    Sipper.FileNameCleaner.migrate_unclean dir, file, fn (old_file, new_file) ->
+      IO.puts [IO.ANSI.yellow, @rename_label, IO.ANSI.reset, " ", ~s(Renaming "#{old_file}" -> "#{new_file}")]
+    end
   end
 end
