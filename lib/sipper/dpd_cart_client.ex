@@ -5,14 +5,15 @@ defmodule Sipper.DpdCartClient do
   @feed_timeout_ms 15_000  # The default 5000 will time out sometimes.
   @file_timeout_ms 1000 * 60 * 60 * 3
 
-  def get_feed!({_user, _pw} = auth) do
+  def get_feed({_user, _pw} = auth) do
+    # We can't(?) get this with a meaningful progress bar, because the headers doesn't include a Content-Length.
     response = HTTPotion.get(@feed_url, basic_auth: auth, timeout: @feed_timeout_ms)
     %HTTPotion.Response{body: body, status_code: 200} = response
     body
   end
 
-  def get_file({id, name}, {_user, _pw} = auth, callback: cb) do
-    url = file_url(id, name)
+  def get_file(file, {_user, _pw} = auth, callback: cb) do
+    url = file_url(file)
     HTTPotion.get(url, basic_auth: auth, timeout: @file_timeout_ms, stream_to: self)
 
     # The files in episode 89 (and maybe others) redirect to S3.
@@ -59,7 +60,7 @@ defmodule Sipper.DpdCartClient do
     end
   end
 
-  defp file_url(id, name) do
+  defp file_url(%Sipper.File{id: id, name: name}) do
     "https://#{@subdomain}.dpdcart.com/feed/download/#{id}/#{name}"
   end
 end
