@@ -1,5 +1,5 @@
 defmodule Sipper.FeedCache do
-  @path "/tmp/sipper.cache"
+  @path System.tmp_dir() <> "/sipper.cache"
   @ttl_seconds 60 * 10
 
   def read do
