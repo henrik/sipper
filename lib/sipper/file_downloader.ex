@@ -13,10 +13,10 @@ defmodule Sipper.FileDownloader do
   end
 
   defp download_file(title, file, config) do
-    dir = "#{config.dir}/#{title |> String.replace(":", " ")}"
+    dir = "#{config.dir}/#{clean_file_name title}"
     File.mkdir_p!(dir)
 
-    path = "#{dir}/#{file.name}"
+    path = "#{dir}/#{clean_file_name file.name}"
 
     if File.exists?(path) do
       IO.puts [IO.ANSI.blue, @exists_label, IO.ANSI.reset, " ", path]
@@ -32,5 +32,10 @@ defmodule Sipper.FileDownloader do
 
   defp download_file_callback({:file_done, data}, path) do
     File.write!(path, data)
+  end
+
+  defp clean_file_name(name) do
+    name
+    |> String.replace(":", "-")  # Breaks on Windows, shown as "/" on OS X.
   end
 end
