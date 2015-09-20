@@ -24,7 +24,7 @@ defmodule Sipper.CLI do
 
     config = %Sipper.Config{
       auth: {user, pw},
-      dir: Dict.get(options, :dir, "./downloads") |> Path.expand ,
+      dir: Dict.get(options, :dir, "./downloads") |> Path.expand,
       max: Dict.get(options, :max, :unlimited),
     }
 
