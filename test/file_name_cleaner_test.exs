@@ -24,8 +24,7 @@ defmodule SipperFileNameCleanerTest do
     assert File.exists?("#{dir}/Foo: Bar")
     assert File.exists?("#{dir}/Foo: Bar/contents.txt")
 
-    cb = fn (_old, _new) -> end
-    Sipper.FileNameCleaner.migrate_unclean(dir, "Foo: Bar", cb)
+    Sipper.FileNameCleaner.migrate_unclean(dir, "Foo: Bar", &no_op/2)
 
     assert File.exists?("#{dir}/Foo- Bar")
     assert File.exists?("#{dir}/Foo- Bar/contents.txt")
@@ -37,8 +36,7 @@ defmodule SipperFileNameCleanerTest do
 
     assert File.exists?("#{dir}/Foo: Bar.txt")
 
-    cb = fn (_old, _new) -> end
-    Sipper.FileNameCleaner.migrate_unclean(dir, "Foo: Bar.txt", cb)
+    Sipper.FileNameCleaner.migrate_unclean(dir, "Foo: Bar.txt", &no_op/2)
 
     assert File.exists?("#{dir}/Foo- Bar.txt")
     refute File.exists?("#{dir}/Foo: Bar.txt")
@@ -49,8 +47,7 @@ defmodule SipperFileNameCleanerTest do
 
     assert File.exists?("#{dir}/Already clean.txt")
 
-    cb = fn (_old, _new) -> end
-    Sipper.FileNameCleaner.migrate_unclean(dir, "Already clean.txt", cb)
+    Sipper.FileNameCleaner.migrate_unclean(dir, "Already clean.txt", &no_op/2)
 
     assert File.exists?("#{dir}/Already clean.txt")
   end
@@ -65,5 +62,8 @@ defmodule SipperFileNameCleanerTest do
     Sipper.FileNameCleaner.migrate_unclean(dir, "Foo: Bar.txt", cb)
 
     assert_received {:called_back, "Foo: Bar.txt", "Foo- Bar.txt"}
+  end
+
+  defp no_op(_old, _new) do
   end
 end
