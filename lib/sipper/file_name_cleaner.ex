@@ -21,13 +21,6 @@ defmodule Sipper.FileNameCleaner do
     old_path = "#{dir}/#{old_file}"
     new_path = "#{dir}/#{new_file}"
 
-    # Elixir won't let us create a directory by copying it.
-    # But we can create it and then copy the contents.
-    if File.dir?(old_path) do
-      File.mkdir!(new_path)
-    end
-
-    File.cp_r!(old_path, new_path)
-    File.rm_rf!(old_path)
+    :ok = :file.rename(old_path, new_path)
   end
 end
