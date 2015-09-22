@@ -7,10 +7,10 @@ defmodule Sipper.FeedDownloader do
       _ ->
         IO.puts [IO.ANSI.magenta, "[GETTING FEED…]"]
 
-        ProgressBar.render_indeterminate
+        Sipper.ProgressBar.print_indeterminate
         feed = Sipper.DpdCartClient.get_feed(config.auth)
         Sipper.FeedCache.write(feed)
-        ProgressBar.terminate
+        Sipper.ProgressBar.terminate
 
         feed
     end
