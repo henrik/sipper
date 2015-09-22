@@ -31,7 +31,7 @@ defmodule Sipper.FileDownloader do
   end
 
   defp download_file_callback({:file_progress, acc, total}, _path) do
-    Sipper.ProgressBar.print(acc, total)
+    Sipper.ProgressBar.render(acc, total)
   end
 
   defp download_file_callback({:file_done, data}, path) do
