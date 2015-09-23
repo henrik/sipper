@@ -5,9 +5,9 @@ defmodule Sipper.FeedDownloader do
         IO.puts [IO.ANSI.blue, "[USING CACHED FEED]"]
         cached_feed
       _ ->
-        IO.puts [IO.ANSI.magenta, "[GETTING FEED…]"]
+        label = [IO.ANSI.magenta, "[GETTING FEED…] ", IO.ANSI.reset]
 
-        Sipper.ProgressBar.render_indeterminate fn ->
+        Sipper.ProgressBar.render_indeterminate label, fn ->
           feed = Sipper.DpdCartClient.get_feed(config.auth)
           Sipper.FeedCache.write(feed)
           feed

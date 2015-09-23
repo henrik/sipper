@@ -16,7 +16,7 @@ defmodule Sipper.ProgressBar do
     ProgressBar.render(acc, total, format)
   end
 
-  def render_indeterminate(fun) do
+  def render_indeterminate(label, fun) do
     format = [
       bars: [
         @bar <> @blank <> @blank <> @blank,
@@ -27,7 +27,8 @@ defmodule Sipper.ProgressBar do
       done: @bar,
       bars_color: IO.ANSI.magenta,
       done_color: IO.ANSI.magenta,
-      left: "", right: "",
+      left: label,
+      right: "",
     ]
 
     ProgressBar.render_indeterminate(format, fun)
