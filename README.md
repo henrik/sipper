@@ -40,9 +40,13 @@ If a file exists on disk, it won't be downloaded again.
 
 #### Saved configuration
 
-If you don't want to specify these parameters each time, you can put them in a `~/.sipper` file, e.g.
+If you don't want to specify these parameters each time, you can put them in a `~/.sipper` file, containing e.g.
 
     --user me@example.com --pw mypassword --dir ~/Downloads/Elixir\ Sips
+
+Then you can just run the app like:
+
+    ./sipper
 
 
 ## Don't be evil
