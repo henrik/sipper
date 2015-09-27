@@ -1,5 +1,7 @@
 # Sipper
 
+[![Build Status](https://travis-ci.org/henrik/sipper.svg?branch=master)](https://travis-ci.org/henrik/sipper)
+
 Downloader for [Elixir Sips](http://elixirsips.com/), implemented in Elixir for fun and learning.
 
 ![Screenshot](https://s3.amazonaws.com/f.cl.ly/items/2D1L0x0e1d2D2x2L3D3o/sipper.gif)
