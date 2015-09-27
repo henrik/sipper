@@ -11,7 +11,7 @@ Downloader for [Elixir Sips](http://elixirsips.com/), implemented in Elixir for 
 
 You need a paid account with [Elixir Sips](http://elixirsips.com/). Then build the downloader and run it.
 
-## Building
+### Building
 
 Clone this repo and:
 
@@ -22,7 +22,7 @@ This builds a `sipper` executable in the current directory.
 
 The `sipper` executable is self-contained and can run on any machine with Erlang installed. [Read more.](http://elixir-lang.org/docs/master/mix/Mix.Tasks.Escript.Build.html)
 
-## Downloading
+### Downloading
 
 Now you can download episodes with:
 
@@ -38,7 +38,7 @@ By default, files end up in `./downloads`. You can specify another destination (
 
 If a file exists on disk, it won't be downloaded again.
 
-### Saved configuration
+#### Saved configuration
 
 If you don't want to specify these parameters each time, you can put them in a `~/.sipper` file, e.g.
 
