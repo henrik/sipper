@@ -9,10 +9,23 @@ Downloader for [Elixir Sips](http://elixirsips.com/), implemented in Elixir for 
 
 ## Usage
 
-You need a paid account with [Elixir Sips](http://elixirsips.com/). Then clone this repo and:
+You need a paid account with [Elixir Sips](http://elixirsips.com/). Then build the downloader and run it.
+
+## Building
+
+Clone this repo and:
 
     mix deps.get
-    mix escript.build  # Builds a "sipper" executable
+    mix escript.build
+
+This builds a `sipper` executable in the current directory.
+
+The `sipper` executable is self-contained and can run on any machine with Erlang installed. [Read more.](http://elixir-lang.org/docs/master/mix/Mix.Tasks.Escript.Build.html)
+
+## Downloading
+
+Now you can download episodes with:
+
     ./sipper --user me@example.com --pw mypassword
 
 If you want to limit the download to e.g. the last 3 episodes, do:
@@ -25,7 +38,11 @@ By default, files end up in `./downloads`. You can specify another destination (
 
 If a file exists on disk, it won't be downloaded again.
 
-The `sipper` executable is self-contained and can run on any machine with Erlang installed. [Read more.](http://elixir-lang.org/docs/master/mix/Mix.Tasks.Escript.Build.html)
+### Saved configuration
+
+If you don't want to specify these parameters each time, you can put them in a `~/.sipper` file, e.g.
+
+    --user me@example.com --pw mypassword --dir ~/Downloads/Elixir\ Sips
 
 
 ## Don't be evil
