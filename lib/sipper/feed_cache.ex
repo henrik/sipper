@@ -22,7 +22,7 @@ defmodule Sipper.FeedCache do
   end
 
   defp stale? do
-    case File.stat(@path) do
+    case File.stat(@path, time: :local) do
       {:ok, info} ->
         modified_secs = info.mtime |> :calendar.datetime_to_gregorian_seconds
         current_secs = :calendar.local_time |> :calendar.datetime_to_gregorian_seconds
