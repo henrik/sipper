@@ -14,9 +14,11 @@ defmodule Sipper.FileDownloader do
   end
 
   defp download_file(title, file, config) do
-    rename_any_existing_file_to_new_clean_name(config.dir, title)
-    dir = "#{config.dir}/#{clean_file_name title}"
+    File.mkdir_p!(config.dir)
 
+    rename_any_existing_file_to_new_clean_name(config.dir, title)
+
+    dir = "#{config.dir}/#{clean_file_name title}"
     File.mkdir_p!(dir)
 
     rename_any_existing_file_to_new_clean_name(dir, file.name)
