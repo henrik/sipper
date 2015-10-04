@@ -16,7 +16,7 @@ You need a paid account with [Elixir Sips](http://elixirsips.com/). Then build t
 Clone this repo and:
 
     mix deps.get
-    mix escript.build
+    mix escript.build  # (or just "mix": this is the default task)
 
 This builds a `sipper` executable in the current directory.
 
