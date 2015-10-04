@@ -22,15 +22,19 @@ defmodule Sipper.FeedCache do
   end
 
   defp stale? do
-    case File.stat(@path, time: :local) do
+    case File.stat(@path, time: :posix) do
       {:ok, info} ->
-        modified_secs = info.mtime |> :calendar.datetime_to_gregorian_seconds
-        current_secs = :calendar.local_time |> :calendar.datetime_to_gregorian_seconds
-        age = current_secs - modified_secs
+        age = current_posix_time - info.mtime
         age > @ttl_seconds
       _ ->
         # No file, so it's not stale.
         false
     end
+  end
+
+  defp current_posix_time do
+    # Erlang 17 compatibility. Erlang 18: :os.system_time(:seconds)
+    {megasecs, secs, _} = :os.timestamp
+    megasecs * 1_000_000 + secs
   end
 end
