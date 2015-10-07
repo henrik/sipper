@@ -2,12 +2,10 @@ defmodule Sipper.FeedDownloader do
   def run(config) do
     case Sipper.FeedCache.read do
       {:ok, cached_feed} ->
-        IO.puts [IO.ANSI.blue, "[USING CACHED FEED]"]
+        IO.puts "Using cached feed."
         cached_feed
       _ ->
-        label = [IO.ANSI.magenta, "[GETTING FEED…] ", IO.ANSI.reset]
-
-        Sipper.ProgressBar.render_indeterminate label, fn ->
+        Sipper.ProgressBar.render_spinner "Getting feed…", "Got feed.", fn ->
           feed = Sipper.DpdCartClient.get_feed(config.auth)
           Sipper.FeedCache.write(feed)
           feed

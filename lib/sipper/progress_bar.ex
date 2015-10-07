@@ -16,21 +16,16 @@ defmodule Sipper.ProgressBar do
     ProgressBar.render(acc, total, format)
   end
 
-  def render_indeterminate(label, fun) do
+  def render_spinner(text, done, fun) do
     format = [
-      bars: [
-        @bar <> @blank <> @blank <> @blank,
-        @blank <> @bar <> @blank <> @blank,
-        @blank <> @blank <> @bar <> @blank,
-        @blank <> @blank <> @blank <> @bar,
-      ],
-      done: @bar,
-      bars_color: IO.ANSI.magenta,
-      done_color: IO.ANSI.magenta,
-      left: label,
-      right: "",
+      # Stole these frames from WebTranslateIt.
+      frames: ~w[⠋ ⠙ ⠹ ⠸ ⠼ ⠴ ⠦ ⠧ ⠇ ⠏],
+      interval: 100,
+      spinner_color: IO.ANSI.magenta,
+      text: text,
+      done: [IO.ANSI.green, "✓", IO.ANSI.reset, " ", done],
     ]
 
-    ProgressBar.render_indeterminate(format, fun)
+    ProgressBar.render_spinner(format, fun)
   end
 end
