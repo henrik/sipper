@@ -19,7 +19,6 @@ defmodule Sipper.ProgressBar do
   def render_spinner(text, done, fun) do
     format = [
       frames: :braille,
-      interval: 100,
       spinner_color: IO.ANSI.magenta,
       text: text,
       done: [IO.ANSI.green, "✓", IO.ANSI.reset, " ", done],
