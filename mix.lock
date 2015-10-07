@@ -3,4 +3,4 @@
   "ibrowse": {:git, "git://github.com/cmullaparthi/ibrowse.git", "ea3305d21f37eced4fac290f64b068e56df7de80", [tag: "v4.1.2"]},
   "mochiweb": {:hex, :mochiweb, "2.12.2"},
   "poolboy": {:git, "git://github.com/devinus/poolboy.git", "3bb48a893ff5598f7c73731ac17545206d259fac", []},
-  "progress_bar": {:hex, :progress_bar, "1.1.0"}}
+  "progress_bar": {:hex, :progress_bar, "1.2.0"}}

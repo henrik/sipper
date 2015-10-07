@@ -18,8 +18,7 @@ defmodule Sipper.ProgressBar do
 
   def render_spinner(text, done, fun) do
     format = [
-      # Stole these frames from WebTranslateIt.
-      frames: ~w[⠋ ⠙ ⠹ ⠸ ⠼ ⠴ ⠦ ⠧ ⠇ ⠏],
+      frames: :braille,
       interval: 100,
       spinner_color: IO.ANSI.magenta,
       text: text,
