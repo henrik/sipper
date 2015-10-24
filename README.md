@@ -57,6 +57,7 @@ Be kind: only download for personal use.
 ## Also see
 
 * [Elixir Sips Downloader](https://github.com/benjamintanweihao/elixir-sips-downloader) written in Ruby
+* [elixirsips-downloader](https://github.com/christian-fei/elixirsips-downloader) written in JavaScript
 
 
 ## License
