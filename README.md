@@ -32,6 +32,10 @@ If you want to limit the download to e.g. the last 3 episodes, do:
 
     ./sipper --user me@example.com --pw mypassword --max 3
 
+You may also want start downloading from very beginning. To do so:
+
+     ./sipper --user me@example.com --pw mypassword --oldest-first
+
 By default, files end up in `./downloads`. You can specify another destination (automatically created if it doesn't exist):
 
     ./sipper --user me@example.com --pw mypassword --dir ~/Downloads/Elixir\ Sips
@@ -47,6 +51,13 @@ If you don't want to specify these parameters each time, you can put them in a `
 Then you can just run the app like:
 
     ./sipper
+
+Assuming you've created `~/.sipper` file with the configuration above, you may also pass more command-line args:
+
+    ./sipper --oldest-first --max 3 --dir ~/Videos/Elixir\ Sips
+
+So, even if you had `--dir ~/Downloads/Elixir\ Sips` in your `~/.sipper` file, the `--dir ~/Videos/Elixir\ Sips` arguments will have
+preference over it.
 
 
 ## Don't be evil
