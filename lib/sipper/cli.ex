@@ -1,17 +1,18 @@
 defmodule Sipper.CLI do
   @config_file System.user_home! <> "/.sipper"
 
-  def main([]) do
-    if File.exists?(@config_file) do
-      args = File.read!(@config_file) |> String.rstrip |> OptionParser.split
-      main(args)
-    else
-      IO.puts :stderr, "Please provide parameters!"
-    end
+  def main(args) do
+    parse_config_file ++ args
+    |> parse_args
+    |> run
   end
 
-  def main(args) do
-    args |> parse_args |> run
+  defp parse_config_file() do
+    args = []
+    if File.exists?(@config_file) do
+      args = File.read!(@config_file) |> String.rstrip |> OptionParser.split
+    end
+    args
   end
 
   defp parse_args(args) do
@@ -23,6 +24,7 @@ defmodule Sipper.CLI do
       switches: [
         max: :integer,
         dir: :string,
+        oldest_first: :boolean,
       ],
     )
 
@@ -30,6 +32,7 @@ defmodule Sipper.CLI do
   end
 
   defp run(options) do
+
     user = Dict.fetch!(options, :user)
     pw = Dict.fetch!(options, :pw)
 
@@ -37,7 +40,10 @@ defmodule Sipper.CLI do
       auth: {user, pw},
       dir: Dict.get(options, :dir, "./downloads") |> Path.expand,
       max: Dict.get(options, :max, :unlimited),
+      oldest_first: Dict.get(options, :oldest_first, :false),
     }
+
+    IO.inspect config
 
     Sipper.Runner.run(config)
   end
