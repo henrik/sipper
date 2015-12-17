@@ -23,6 +23,8 @@ defmodule Sipper.CLI do
       switches: [
         max: :integer,
         dir: :string,
+        ignore: :string,
+        asc: :boolean
       ],
     )
 
@@ -30,13 +32,16 @@ defmodule Sipper.CLI do
   end
 
   defp run(options) do
-    user = Dict.fetch!(options, :user)
-    pw = Dict.fetch!(options, :pw)
+    user   = Dict.fetch!(options, :user)
+    pw     = Dict.fetch!(options, :pw)
+    ignore = Dict.fetch(options, :ignore, "")
 
     config = %Sipper.Config{
-      auth: {user, pw},
-      dir: Dict.get(options, :dir, "./downloads") |> Path.expand,
-      max: Dict.get(options, :max, :unlimited),
+      auth:      {user, pw},
+      dir:       Dict.get(options, :dir, "./downloads") |> Path.expand,
+      max:       Dict.get(options, :max, :unlimited),
+      ignore:    String.split(ignore, ","),
+      ascending: Dict.fetch(options, :asc, false),
     }
 
     Sipper.Runner.run(config)
