@@ -34,14 +34,14 @@ defmodule Sipper.CLI do
   defp run(options) do
     user   = Dict.fetch!(options, :user)
     pw     = Dict.fetch!(options, :pw)
-    ignore = Dict.fetch(options, :ignore, "")
+    ignore = Dict.get(options, :ignore, "")
 
     config = %Sipper.Config{
       auth:      {user, pw},
       dir:       Dict.get(options, :dir, "./downloads") |> Path.expand,
       max:       Dict.get(options, :max, :unlimited),
-      ignore:    String.split(ignore, ","),
-      ascending: Dict.fetch(options, :asc, false),
+      ignore:    String.split(ignore, ",", trim: true),
+      ascending: Dict.get(options, :asc, false),
     }
 
     Sipper.Runner.run(config)
