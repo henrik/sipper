@@ -22,12 +22,8 @@ defmodule Sipper.Runner do
     end)
   end
 
-  defp change_download_order(episodes, ascending) do
-    cond do
-      ascending -> Enum.reverse(episodes)
-      true -> episodes
-    end
-  end
+  defp change_download_order(episodes, true),  do: Enum.reverse(episodes)
+  defp change_download_order(episodes, false), do: episodes
 
   defp limit_to(episodes, :unlimited), do: episodes
   defp limit_to(episodes, max), do: episodes |> Enum.take(max)
