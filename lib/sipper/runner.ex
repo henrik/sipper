@@ -17,8 +17,8 @@ defmodule Sipper.Runner do
   end
 
   defp ignore_episodes(episodes, ignore_episodes) do
-    Enum.filter(episodes, fn {title, _} ->
-      Enum.all?(ignore_episodes, fn x -> !String.contains?(title, x) end)
+    Enum.reject(episodes, fn {title, _} -> 
+      Enum.any?(ignore_episodes, fn ignored -> String.contains?(title, ignored) end)
     end)
   end
 
