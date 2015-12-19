@@ -2,7 +2,7 @@ defmodule Sipper.Runner do
   def run(config) do
     get_feed(config)
     |> parse_feed
-    |> change_download_order(config.ascending)
+    |> change_download_order(config.oldest_first)
     |> ignore_episodes(config.ignore)
     |> limit_to(config.max)
     |> download(config)

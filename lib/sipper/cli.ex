@@ -24,7 +24,7 @@ defmodule Sipper.CLI do
         max: :integer,
         dir: :string,
         ignore: :string,
-        asc: :boolean
+        oldest_first: :boolean,
       ],
     )
 
@@ -37,11 +37,11 @@ defmodule Sipper.CLI do
     ignore = Dict.get(options, :ignore, "")
 
     config = %Sipper.Config{
-      auth:      {user, pw},
-      dir:       Dict.get(options, :dir, "./downloads") |> Path.expand,
-      max:       Dict.get(options, :max, :unlimited),
-      ignore:    String.split(ignore, ",", trim: true),
-      ascending: Dict.get(options, :asc, false),
+      auth:         {user, pw},
+      dir:          Dict.get(options, :dir, "./downloads") |> Path.expand,
+      max:          Dict.get(options, :max, :unlimited),
+      ignore:       String.split(ignore, ",", trim: true),
+      oldest_first: Dict.get(options, :oldest_first, false),
     }
 
     Sipper.Runner.run(config)
