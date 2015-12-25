@@ -32,7 +32,7 @@ If you want to limit the download to e.g. the last 3 episodes, do:
 
     ./sipper --user me@example.com --pw mypassword --max 3
 
-If you want to change the order of downloading from first to last, do:
+By default, episodes are downloaded newest-first. If you want to instead download them oldest-first, do:
 
     ./sipper --user me@example.com --pw mypassword --oldest-first
 
