@@ -32,6 +32,14 @@ If you want to limit the download to e.g. the last 3 episodes, do:
 
     ./sipper --user me@example.com --pw mypassword --max 3
 
+If you want to change the order of downloading from first to last, do:
+
+    ./sipper --user me@example.com --pw mypassword --oldest-first
+
+If you want to ignore some episodes (e.g. deprecated content), do:
+
+    ./sipper --user me@example.com --pw mypassword --ignore "007,008,009"
+
 By default, files end up in `./downloads`. You can specify another destination (automatically created if it doesn't exist):
 
     ./sipper --user me@example.com --pw mypassword --dir ~/Downloads/Elixir\ Sips
