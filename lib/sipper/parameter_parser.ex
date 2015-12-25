@@ -37,6 +37,7 @@ defmodule Sipper.ParameterParser do
   defp parse_list(list) do
     {options, _, _} =
       OptionParser.parse(list, @option_parser_opts)
+
     options
   end
 end
