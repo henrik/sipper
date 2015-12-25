@@ -31,6 +31,6 @@ defmodule SipperParameterParserTest do
 
     result = Sipper.ParameterParser.parse(["--user", "from_arg"], config_file_path)
 
-    assert result == [user: "from_arg", pw: "from_file"]
+    assert result |> Keyword.equal?([user: "from_arg", pw: "from_file"])
   end
 end
