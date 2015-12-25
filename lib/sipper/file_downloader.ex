@@ -4,6 +4,10 @@ defmodule Sipper.FileDownloader do
   @get_label    "[GET]   "
   @rename_label "[RENAME]"
 
+  def run([], _config) do
+    IO.puts :stderr, "Nothing to download! Maybe your subscription is inactive?"
+  end
+
   def run(episodes, config) do
     episodes |> Enum.each(&download_episode(&1, config))
     IO.puts "All done!"
