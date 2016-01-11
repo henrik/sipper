@@ -2,7 +2,7 @@ defmodule Sipper.DpdCartClient do
   @subdomain "elixirsips"
   @feed_url "https://#{@subdomain}.dpdcart.com/feed"
 
-  @feed_timeout_ms Application.get_env(:sipper, :feed_timeout)
+  @feed_timeout_ms Application.get_env(:sipper, :feed_timeout_ms)
   @file_timeout_ms 1000 * 60 * 60 * 3
 
   def get_feed({_user, _pw} = auth) do
