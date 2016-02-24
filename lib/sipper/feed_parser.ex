@@ -2,7 +2,7 @@ defmodule Sipper.FeedParser do
   def parse(html) do
     html
     |> feed_items
-    |> Enum.map &parse_item/1
+    |> Enum.map(&parse_item/1)
   end
 
   defp feed_items(html) do
@@ -18,9 +18,9 @@ defmodule Sipper.FeedParser do
     files =
       ~r|<a href=".+/download\?file_id=(\d+)">(.+?)</a>|
       |> Regex.scan(description_html)
-      |> Enum.map fn ([_, id, name]) ->
+      |> Enum.map(fn ([_, id, name]) ->
         %Sipper.File{id: id, name: name}
-      end
+      end)
 
     { title, files }
   end
