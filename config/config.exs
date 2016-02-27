@@ -14,6 +14,8 @@ use Mix.Config
 #       level: :info,
 #       format: "$date $time [$level] $metadata$message\n",
 #       metadata: [:user_id]
+
+# NOTE: If you change this config, you need to recompile, by runnning "mix escript.build".
 config :sipper,
   feed_timeout_ms: 15_000  # The default 5000 will time out sometimes.
 
