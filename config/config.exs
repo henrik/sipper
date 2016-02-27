@@ -17,7 +17,7 @@ use Mix.Config
 
 # NOTE: If you change this config, you need to recompile, by runnning "mix escript.build".
 config :sipper,
-  feed_timeout_ms: 15_000  # The default 5000 will time out sometimes.
+  feed_timeout_ms: 100_000  # The default 5000 will time out sometimes.
 
 # It is also possible to import configuration files, relative to this
 # directory. For example, you can emulate configuration per environment
