@@ -67,6 +67,8 @@ Be kind: only download for personal use.
 * [Elixir Sips Downloader](https://github.com/benjamintanweihao/elixir-sips-downloader) written in Ruby
 * [elixirsips-downloader](https://github.com/christian-fei/elixirsips-downloader) written in JavaScript
 
+## Miscellaneous
+* This can also be used for RubyTapas, just change the `@subdomain` to `rubytapas` and run `mix` to recompile.
 
 ## License
 
