@@ -26,6 +26,7 @@ defmodule Sipper.Runner do
   defp change_download_order(episodes, true),  do: Enum.reverse(episodes)
   defp change_download_order(episodes, false), do: episodes
 
+  defp skip_until(episodes, :none), do: episodes
   defp skip_until(episodes, first) do
     first = first |> String.pad_leading(3, "0")
 
