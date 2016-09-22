@@ -39,6 +39,10 @@ By default, episodes are downloaded newest-first. If you want to instead downloa
 If you want to ignore some episodes (e.g. deprecated content), do:
 
     ./sipper --user me@example.com --pw mypassword --ignore "007,008,009"
+    
+You may want to start downloading from N, do:
+
+    ./sipper --user me@example.com --pw mypassword --oldest-first --start N
 
 By default, files end up in `./downloads`. You can specify another destination (automatically created if it doesn't exist):
 
