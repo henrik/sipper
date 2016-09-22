@@ -4,6 +4,7 @@ defmodule Sipper.Runner do
     |> parse_feed
     |> change_download_order(config.oldest_first)
     |> ignore_episodes(config.ignore)
+    |> skip_until(config.start)
     |> limit_to(config.max)
     |> download(config)
   end
@@ -24,6 +25,14 @@ defmodule Sipper.Runner do
 
   defp change_download_order(episodes, true),  do: Enum.reverse(episodes)
   defp change_download_order(episodes, false), do: episodes
+
+  defp skip_until(episodes, first) do
+    first = first |> String.pad_leading(3, "0")
+
+    Enum.drop_while(episodes, fn {title, _} ->
+      not String.contains?(title, first)
+    end)
+  end
 
   defp limit_to(episodes, :unlimited), do: episodes
   defp limit_to(episodes, max), do: episodes |> Enum.take(max)

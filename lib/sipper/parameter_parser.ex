@@ -4,6 +4,7 @@ defmodule Sipper.ParameterParser do
     strict: [
       user: :string,
       pw: :string,
+      start: :string,
       max: :integer,
       dir: :string,
       ignore: :string,

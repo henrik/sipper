@@ -19,6 +19,7 @@ defmodule Sipper.CLI do
     config = %Sipper.Config{
       auth:         {user, pw},
       dir:          Dict.get(options, :dir, "./downloads") |> Path.expand,
+      start:        Dict.get(options, :start, 1),
       max:          Dict.get(options, :max, :unlimited),
       ignore:       String.split(ignore, ",", trim: true),
       oldest_first: Dict.get(options, :oldest_first, false),
