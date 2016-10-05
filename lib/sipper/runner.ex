@@ -4,7 +4,7 @@ defmodule Sipper.Runner do
     |> parse_feed
     |> change_download_order(config.oldest_first)
     |> ignore_episodes(config.ignore)
-    |> skip_until(config.start)
+    |> skip_until(config.start_episode)
     |> limit_to(config.max)
     |> download(config)
   end
@@ -27,11 +27,12 @@ defmodule Sipper.Runner do
   defp change_download_order(episodes, false), do: episodes
 
   defp skip_until(episodes, :none), do: episodes
-  defp skip_until(episodes, first) do
-    first = first |> String.pad_leading(3, "0")
+  defp skip_until(episodes, start_episode) do
+    start_episode = start_episode |> String.pad_leading(3, "0")
+    start_episode_regex = Regex.compile!("^" <> start_episode)
 
     Enum.drop_while(episodes, fn {title, _} ->
-      not String.contains?(title, first)
+      not Regex.match?(start_episode_regex, title)
     end)
   end
 
