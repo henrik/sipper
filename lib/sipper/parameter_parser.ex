@@ -4,6 +4,7 @@ defmodule Sipper.ParameterParser do
     strict: [
       user: :string,
       pw: :string,
+      start_from_episode: :string,
       max: :integer,
       dir: :string,
       ignore: :string,

@@ -17,11 +17,12 @@ defmodule Sipper.CLI do
     ignore = Dict.get(options, :ignore, "")
 
     config = %Sipper.Config{
-      auth:         {user, pw},
-      dir:          Dict.get(options, :dir, "./downloads") |> Path.expand,
-      max:          Dict.get(options, :max, :unlimited),
-      ignore:       String.split(ignore, ",", trim: true),
-      oldest_first: Dict.get(options, :oldest_first, false),
+      auth:           {user, pw},
+      dir:            Dict.get(options, :dir, "./downloads") |> Path.expand,
+      start_episode:  Dict.get(options, :start_from_episode, :none),
+      max:            Dict.get(options, :max, :unlimited),
+      ignore:         String.split(ignore, ",", trim: true),
+      oldest_first:   Dict.get(options, :oldest_first, false),
     }
 
     Sipper.Runner.run(config)
