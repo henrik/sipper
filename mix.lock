@@ -1,6 +1,6 @@
-%{"floki": {:hex, :floki, "0.4.1"},
-  "httpotion": {:hex, :httpotion, "2.1.0"},
+%{"floki": {:hex, :floki, "0.4.1", "e974423d9527ee87768f635ca7f7d6050705621d8844415706e668a61811f0f6", [:mix], [{:mochiweb, "~> 2.12.2", [hex: :mochiweb, optional: false]}]},
+  "httpotion": {:hex, :httpotion, "2.1.0", "3fe84fbd13d4560c2514da656d022b1191a079178ee4992d245fc3c33c01ee18", [:mix], []},
   "ibrowse": {:git, "https://github.com/cmullaparthi/ibrowse.git", "ea3305d21f37eced4fac290f64b068e56df7de80", [tag: "v4.1.2"]},
-  "mochiweb": {:hex, :mochiweb, "2.12.2"},
+  "mochiweb": {:hex, :mochiweb, "2.12.2", "80804ad342afa3d7f3524040d4eed66ce74b17a555de454ac85b07c479928e46", [:make, :rebar], []},
   "poolboy": {:git, "git://github.com/devinus/poolboy.git", "3bb48a893ff5598f7c73731ac17545206d259fac", []},
-  "progress_bar": {:hex, :progress_bar, "1.3.0"}}
+  "progress_bar": {:hex, :progress_bar, "1.6.1", "4a82aa4f2b04708dca7472febf5e73477f0e09c81fec98fc502c8d5e3d833172", [:mix], []}}
